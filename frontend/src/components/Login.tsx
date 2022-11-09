@@ -4,17 +4,21 @@ import Form from "react-bootstrap/Form";
 import axios from "axios";
 import Cookies from "universal-cookie";
 import { useNavigate } from "react-router-dom";
+import { Dispatch, SetStateAction } from "react";
 
 const URL = "http://localhost:4000/login";
 
 const cookies = new Cookies();
 
+interface loginProp {
+	setHasJwtToken?: Dispatch<SetStateAction<boolean>>;
+}
 interface AxiosRegisterPayload {
 	email: string;
 	name: string;
 }
 
-function Login() {
+function Login(prop: loginProp) {
 	let [email, setEmail] = useState("");
 	let [pswd, setPswd] = useState("");
 	let [rememberMe, setRememberMe] = useState(false);
@@ -42,9 +46,9 @@ function Login() {
 	}, []);
 	function onSubmit(e: React.SyntheticEvent) {
 		// e.preventDefault();
-		console.log("in Submmit button click");
-		console.log("email: ", email);
-		console.log("pswd: ", pswd);
+		// console.log("in Submmit button click");
+		// console.log("email: ", email);
+		// console.log("pswd: ", pswd);
 
 		const payload = {
 			email: email,

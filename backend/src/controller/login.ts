@@ -1,8 +1,6 @@
 require("dotenv").config();
-var Express = require("express");
-var router = Express.Router();
-const OnboardingApplicationModel = require("../models/OnboardingApplication");
-const EmailInvitationModel = require("../models/EmailInvitation");
+var express = require("express");
+var router = express.Router();
 const bcrypt = require("bcryptjs"); // password hash
 const jwt = require("jsonwebtoken");
 const EMAIL_VALIDATION =
@@ -31,6 +29,7 @@ router.post("/login", async function (req: any, res: any) {
 			message: valid ? "valid token" : "invalid token",
 			email: decoded.email,
 		});
+		return;
 	}
 	const findOne = await UserModel.findOne({ ...req.body });
 	console.log(findOne);
@@ -49,10 +48,9 @@ router.post("/login", async function (req: any, res: any) {
 		res.send({ message: "login successful", jwt: signed_jwt });
 	} else {
 		// did not find the record
-		res.send("not yet registered");
+		res.send({ message: "not yet registered" });
 	}
 
-	// res.send("in login");
 	// next;
 });
 

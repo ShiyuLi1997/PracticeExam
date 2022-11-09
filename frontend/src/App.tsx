@@ -1,12 +1,13 @@
 import React, { useEffect, useState } from "react";
 import "./App.css";
-// routes
+// react-router-dom
 import {
 	Routes,
 	Route,
 	Outlet,
-	Link,
 	BrowserRouter as Router,
+	redirect,
+	Navigate,
 } from "react-router-dom";
 // components
 import Login from "./components/Login";
@@ -16,28 +17,50 @@ import Home from "./components/Home";
 import Container from "react-bootstrap/Container";
 import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
-import NavDropdown from "react-bootstrap/NavDropdown";
-
+// cookie
 import Cookies from "universal-cookie";
 const cookies = new Cookies();
 
+// type define
+
+type layoutProp = {
+	hasJwtToken: Boolean;
+	deleteJWT: any;
+};
+
 function App() {
-	let [jwtToken, setJwtToken] = useState(false);
+	let [hasJwtToken, setHasJwtToken] = useState(false);
 
 	useEffect(() => {
+		// document.cookie = "cookiename=Some Name; path=/";
 		const jwt = cookies.get("jwt");
+		console.log("jwt in app useeffect: ", jwt);
 		if (jwt) {
-			setJwtToken(true);
+			setHasJwtToken(true);
+			console.log("has jwt");
+		} else {
+			console.log("dont have jwt");
+			redirect("/login");
 		}
 	}, []);
+
+	function deleteJWT() {
+		cookies.remove("jwt");
+	}
 
 	return (
 		<div className="App">
 			{/* Routes with react-router-dom */}
 			<Router>
 				<Routes>
-					<Route path="/" element={<Layout />}>
-						<Route path="login" element={<Login />}>
+					<Route
+						path="/"
+						element={<Layout hasJwtToken={hasJwtToken} deleteJWT={deleteJWT} />}
+					>
+						<Route
+							path="login"
+							element={<Login setHasJwtToken={setHasJwtToken} />}
+						>
 							Login
 						</Route>
 						<Route path="register" element={<Register />}>
@@ -52,33 +75,50 @@ function App() {
 		</div>
 	);
 }
-function Layout() {
-	return (
-		<div>
-			{/* nav links with bootstrap */}
-			<Navbar bg="light" expand="lg">
-				<Container>
-					<Navbar.Toggle aria-controls="basic-navbar-nav" />
-					<Navbar.Collapse id="basic-navbar-nav">
-						<Nav className="me-auto">
-							{/* Nav links */}
-							<Nav.Link href="/">Home</Nav.Link>
-							{/* {jwtToken ? (
-								<>
-									<Nav.Link href="login">Login</Nav.Link>
-									<Nav.Link href="register">Register</Nav.Link>
-								</>
-							) : null} */}
-							<Nav.Link href="login">Login</Nav.Link>
-							<Nav.Link href="register">Register</Nav.Link>
-						</Nav>
-					</Navbar.Collapse>
-				</Container>
-			</Navbar>
 
-			{/* render what is clicked */}
-			<Outlet />
-		</div>
+function Layout(props: layoutProp) {
+	return (
+		<>
+			{/* Navbar */}
+			<div>
+				{/* nav links with bootstrap */}
+				<Navbar bg="light" expand="lg">
+					<Container>
+						<Navbar.Toggle aria-controls="basic-navbar-nav" />
+						<Navbar.Collapse id="basic-navbar-nav">
+							<Nav className="me-auto">
+								{/* Nav links */}
+								<Nav.Link href="/">Home</Nav.Link>
+
+								{props.hasJwtToken ? (
+									<>
+										<a
+											href="/login"
+											onClick={() => {
+												props.deleteJWT();
+												redirect("/login");
+											}}
+										>
+											logout{" "}
+										</a>
+									</>
+								) : (
+									<>
+										<Nav.Link href="login">Login</Nav.Link>
+										<Nav.Link href="register">Register</Nav.Link>
+									</>
+								)}
+								{/* <Nav.Link href="login">Login</Nav.Link>
+								<Nav.Link href="register">Register</Nav.Link> */}
+							</Nav>
+						</Navbar.Collapse>
+					</Container>
+				</Navbar>
+
+				{/* render what is clicked */}
+				<Outlet />
+			</div>
+		</>
 	);
 }
 export default App;

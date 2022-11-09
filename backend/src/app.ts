@@ -6,7 +6,7 @@ const path = require("path");
 const cors = require("cors");
 // controller
 // modules
-import { UserModel } from "./model/Users";
+// import { UserModel } from "./model/Users";
 import userController from "./controller/login";
 
 //  view engine setup
@@ -24,7 +24,7 @@ app.use(express.static(publicFolder));
 app.use(cors());
 
 // login register
-// app.use(userController);
+app.use(userController);
 // base
 app.get("/", async (req: any, res: any) => {
 	res.send("Welcome to HR Portal");
