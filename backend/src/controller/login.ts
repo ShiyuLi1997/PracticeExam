@@ -6,7 +6,7 @@ const jwt = require("jsonwebtoken");
 const EMAIL_VALIDATION =
 	/^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 
-import { UserModel } from "../model/Users";
+import { userModel } from "../model/Users";
 
 // user login
 router.post("/login", async function (req: any, res: any) {
@@ -31,7 +31,7 @@ router.post("/login", async function (req: any, res: any) {
 		});
 		return;
 	}
-	const findOne = await UserModel.findOne({ ...req.body });
+	const findOne = await userModel.findOne({ ...req.body });
 	console.log(findOne);
 	// not find document
 	if (findOne) {
@@ -61,7 +61,7 @@ router.post("/register", function (req: any, res: any) {
 	let { email, pswd, name, address, phone, picture } = req.body;
 
 	// create new record
-	let newUserRecord = new UserModel({
+	let newUserRecord = new userModel({
 		email: email,
 		pswd: pswd,
 		name: name,

@@ -19,4 +19,4 @@ const userSchema = new mongoose.Schema({
 	},
 });
 // email, pswd, name, address, phone, picture
-export const UserModel = mongoose.model("Users", userSchema);
+export const userModel = mongoose.model("Users", userSchema);

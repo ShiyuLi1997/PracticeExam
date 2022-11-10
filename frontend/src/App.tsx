@@ -13,7 +13,7 @@ import {
 import Login from "./components/Login";
 import Register from "./components/Register";
 import Home from "./components/Home";
-// bootstrap for navbar
+// bootstrap components
 import Container from "react-bootstrap/Container";
 import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
@@ -25,7 +25,7 @@ const cookies = new Cookies();
 
 type layoutProp = {
 	hasJwtToken: Boolean;
-	deleteJWT: any;
+	deleteJwt: any;
 };
 
 function App() {
@@ -44,8 +44,9 @@ function App() {
 		}
 	}, []);
 
-	function deleteJWT() {
+	function deleteJwt() {
 		cookies.remove("jwt");
+		setHasJwtToken(false);
 	}
 
 	return (
@@ -55,7 +56,7 @@ function App() {
 				<Routes>
 					<Route
 						path="/"
-						element={<Layout hasJwtToken={hasJwtToken} deleteJWT={deleteJWT} />}
+						element={<Layout hasJwtToken={hasJwtToken} deleteJwt={deleteJwt} />}
 					>
 						<Route
 							path="login"
@@ -80,27 +81,25 @@ function Layout(props: layoutProp) {
 	return (
 		<>
 			{/* Navbar */}
-			<div>
-				{/* nav links with bootstrap */}
+			<div className="navBar">
+				{/* Nav links with bootstrap */}
 				<Navbar bg="light" expand="lg">
 					<Container>
 						<Navbar.Toggle aria-controls="basic-navbar-nav" />
 						<Navbar.Collapse id="basic-navbar-nav">
 							<Nav className="me-auto">
 								{/* Nav links */}
-								<Nav.Link href="/">Home</Nav.Link>
-
 								{props.hasJwtToken ? (
 									<>
-										<a
-											href="/login"
+										<Nav.Link href="home">Home</Nav.Link>
+										<Nav.Link
+											href="login"
 											onClick={() => {
-												props.deleteJWT();
-												redirect("/login");
+												props.deleteJwt();
 											}}
 										>
-											logout{" "}
-										</a>
+											Logout
+										</Nav.Link>
 									</>
 								) : (
 									<>
@@ -108,8 +107,6 @@ function Layout(props: layoutProp) {
 										<Nav.Link href="register">Register</Nav.Link>
 									</>
 								)}
-								{/* <Nav.Link href="login">Login</Nav.Link>
-								<Nav.Link href="register">Register</Nav.Link> */}
 							</Nav>
 						</Navbar.Collapse>
 					</Container>

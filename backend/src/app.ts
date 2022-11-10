@@ -5,13 +5,8 @@ const app = express();
 const path = require("path");
 const cors = require("cors");
 // controller
-// modules
-// import { UserModel } from "./model/Users";
 import userController from "./controller/login";
-
-//  view engine setup
-// app.set("views", path.join(__dirname, "views"));
-// app.set("view engine", "pug");
+import homeController from "./controller/homeController";
 
 // json format
 app.use(express.json());
@@ -23,8 +18,10 @@ app.use(express.static(publicFolder));
 // cors
 app.use(cors());
 
-// login register
+// login register controller
 app.use(userController);
+// home controlker
+app.use(homeController);
 // base
 app.get("/", async (req: any, res: any) => {
 	res.send("Welcome to HR Portal");

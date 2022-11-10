@@ -1,29 +1,36 @@
 import React, { useEffect, useState } from "react";
+// bootstrap
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
+// axios
 import axios from "axios";
+// cookie for jwt storage
 import Cookies from "universal-cookie";
+// react router
 import { useNavigate } from "react-router-dom";
+// type for ts
 import { Dispatch, SetStateAction } from "react";
 
+// init constants
 const URL = "http://localhost:4000/login";
-
 const cookies = new Cookies();
 
+// type for ts
 interface loginProp {
-	setHasJwtToken?: Dispatch<SetStateAction<boolean>>;
+	setHasJwtToken: Dispatch<SetStateAction<boolean>>;
 }
 interface AxiosRegisterPayload {
 	email: string;
 	name: string;
 }
 
-function Login(prop: loginProp) {
+// login component
+function Login(props: loginProp) {
 	let [email, setEmail] = useState("");
 	let [pswd, setPswd] = useState("");
-	let [rememberMe, setRememberMe] = useState(false);
 	const navigate = useNavigate();
 
+	// check for jwt token
 	useEffect(() => {
 		const jwt = cookies.get("jwt");
 		// there is a jwt in cookies
@@ -38,6 +45,7 @@ function Login(prop: loginProp) {
 				} else {
 					// if valid token, then navigate to home page
 					console.log("valid token");
+					props.setHasJwtToken(true);
 					const userEmail = (res.data as any).email;
 					navigate("/home", { state: { email: userEmail } });
 				}
@@ -67,6 +75,7 @@ function Login(prop: loginProp) {
 				console.log(jwt);
 				// store jwt in session
 				cookies.set("jwt", jwt);
+				props.setHasJwtToken(true);
 				navigate("/home", { state: { email: email } });
 			})
 			.catch((err) => alert(err));
