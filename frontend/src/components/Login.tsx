@@ -70,6 +70,9 @@ function Login(props: loginProp) {
 				} else if (msg === "pswd incorrect") {
 					setLoginErrorMessage(msg);
 					navigate("/login");
+				} else if (msg === "email does not exist") {
+					setLoginErrorMessage(msg);
+					navigate("/login");
 				} else if (msg === "not yet registered") {
 					setLoginErrorMessage(msg);
 					navigate("/login");

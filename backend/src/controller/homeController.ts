@@ -13,7 +13,6 @@ router.get(
 	"/home",
 	jwtMiddleware,
 	async function (req: Request, res: Response) {
-		console.log("in back home get");
 		try {
 			// get data from product collection in Mongodb
 			const allCustomers = await customerModel.find({});

@@ -20,24 +20,32 @@ router.post(
 			const findOne = await userModel.findOne({
 				email: req.body.email,
 			});
-			let equal = await bcrypt.compare(req.body.pswd, findOne?.pswd as string);
+
 			// find document and pswd match
-			if (findOne && equal) {
-				// found the record and email and pswd matched
-				// issue jwt token
-				const signed_jwt = jwt.sign(
-					{
-						email: findOne.email,
-						name: findOne.name,
-					},
-					process.env.JWT_SECRET_KEY as Secret,
-					{ expiresIn: "1h" }
+			if (findOne) {
+				const equal = await bcrypt.compare(
+					req.body.pswd,
+					findOne?.pswd as string
 				);
-				// send back response
-				res.send({ message: "login successful", jwt: signed_jwt });
+				if (equal) {
+					// found the record and email and pswd matched
+					// issue jwt token
+					const signed_jwt = jwt.sign(
+						{
+							email: findOne.email,
+							name: findOne.name,
+						},
+						process.env.JWT_SECRET_KEY as Secret,
+						{ expiresIn: "1h" }
+					);
+					// send back response
+					res.send({ message: "login successful", jwt: signed_jwt });
+				} else {
+					res.send({ message: "password incorrect" });
+				}
 			} else {
 				// did not find the record
-				res.send({ message: "pswd incorrect" });
+				res.send({ message: "email does not exist" });
 			}
 		} else {
 			res.send({ message: "not yet registered" });

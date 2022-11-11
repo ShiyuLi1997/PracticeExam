@@ -18,15 +18,16 @@ const publicFolder = path.join(__dirname, "public");
 app.use(express.static(publicFolder));
 
 // middleware controller use
-app.use(cookieParser());
+// app.use(cookieParser());
 // cors
 const corsconfig = {
 	credentials: true,
 	origin: "http://localhost:3000",
 	// methods: ["POST", "GET", "PUT", "DELETE", "OPTIONS"],
 };
-app.use(cors(corsconfig));
-app.options("*", cors(corsconfig));
+app.use(cors());
+// app.use(cors(corsconfig));
+// app.options("*", cors(corsconfig));
 
 // login register controller
 app.use(userController);

@@ -21,7 +21,8 @@ import Navbar from "react-bootstrap/Navbar";
 import Cookies from "universal-cookie";
 // axios
 import axios from "axios";
-axios.defaults.withCredentials = true;
+// axios.defaults.withCredentials = true;
+
 // axios.defaults.headers["Access-Control-Allow-Origin"] =
 // 	"Get,Post,Put,Delete,Options";
 // axios.defaults.baseURL = "http://localhost:4000";
