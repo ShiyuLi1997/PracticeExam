@@ -3,9 +3,8 @@ import jwt, { Secret, JwtPayload } from "jsonwebtoken";
 
 function jwtMiddleware(req: Request, res: Response, next: NextFunction) {
 	const jwt = req.cookies.jwt;
-	console.log("in jwtmiddleware: ", jwt);
 	if (jwt) {
-		console.log("there is jwt in cookie");
+		console.log("there is jwt in cookie: ", jwt);
 		let valid = false;
 		let decoded: string | JwtPayload = "";
 		// validate token
@@ -21,7 +20,12 @@ function jwtMiddleware(req: Request, res: Response, next: NextFunction) {
 		}
 		// send response
 	} else {
-		res.send({ message: "invalid token" });
+		console.log("does not have jwtmiddleware");
+		if (req.url === "/login") {
+			next();
+		} else {
+			res.send({ message: "invalid token" });
+		}
 	}
 	// next();
 }

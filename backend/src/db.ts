@@ -1,11 +1,11 @@
-export const mongoose = require("mongoose");
 require("dotenv").config();
+import mongoose, { CallbackWithoutResult, ConnectOptions } from "mongoose";
 const { MONGO_KEY } = process.env;
 
 mongoose.connect(
-	MONGO_KEY,
-	{ useNewUrlParser: true, useUnifiedTopology: true },
-	(err: any, data: any) => {
+	MONGO_KEY as string,
+	{ useNewUrlParser: true, useUnifiedTopology: true } as ConnectOptions,
+	(err) => {
 		if (err) {
 			return console.log(err);
 		}
@@ -13,4 +13,4 @@ mongoose.connect(
 	}
 );
 
-module.exports = mongoose.connection;
+export default mongoose.connection;

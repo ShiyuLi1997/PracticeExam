@@ -5,15 +5,7 @@ import Form from "react-bootstrap/Form";
 // axios
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-// s3 config
-export const s3Config = {
-	bucketName: "my-test-bucket-caleb",
-	// dirName: "directory-name" /* Optional */,
-	region: "us-east-2",
-	accessKeyId: "AKIAVTVN2ZSBT4WTIMN2",
-	secretAccessKey: "nsjfA71mREbzNS+Y2SMQpvME9GsUYF8IV2qFfG3U",
-	// s3Url: "https:/your-aws-s3-bucket-url/" /* Optional */,
-};
+
 // init constant
 const URL = "http://localhost:4000/register";
 
@@ -38,17 +30,8 @@ function Register() {
 	let [errorMessage, setErrorMessage] = useState("");
 	const navigate = useNavigate();
 
-	function onSubmit(e: any) {
+	function onSubmit(e: React.SyntheticEvent) {
 		e.preventDefault();
-		console.log("in Submmit button click");
-		console.log("email: ", email);
-		console.log("name: ", name);
-		console.log("pswd: ", pswd);
-		console.log("rePswd: ", rePswd);
-		console.log("address: ", address);
-		console.log("phone: ", phone);
-		console.log("picture: ", picture);
-		// console.log("s3: ", s3Config);
 
 		const payload = {
 			email: email,
@@ -58,13 +41,10 @@ function Register() {
 			phone: phone,
 			// need picture url returned from s3
 		};
-		console.log(payload);
 
 		axios
 			.post<AxiosRegisterPayload>(URL, payload)
 			.then((res) => {
-				console.log("backend return: ", res);
-				console.log("backend return data: ", res.data);
 				navigate("/login");
 			})
 			.catch((err) => alert(err));

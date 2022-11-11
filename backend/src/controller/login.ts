@@ -19,11 +19,10 @@ router.post(
 		if (req.body.email) {
 			const findOne = await userModel.findOne({
 				email: req.body.email,
-				pswd: req.body.pswd,
 			});
-			console.log(findOne);
-			// not find document
-			if (findOne) {
+			let equal = await bcrypt.compare(req.body.pswd, findOne?.pswd as string);
+			// find document and pswd match
+			if (findOne && equal) {
 				// found the record and email and pswd matched
 				// issue jwt token
 				const signed_jwt = jwt.sign(
@@ -38,40 +37,45 @@ router.post(
 				res.send({ message: "login successful", jwt: signed_jwt });
 			} else {
 				// did not find the record
-				res.send({ message: "not yet registered" });
+				res.send({ message: "pswd incorrect" });
 			}
 		} else {
-			res.send({ message: "dont have email" });
+			res.send({ message: "not yet registered" });
 		}
 	}
 );
 
 // user register
-router.post("/register", function (req: Request, res: Response) {
-	console.log(req.body);
+router.post("/register", async function (req: Request, res: Response) {
 	// extract body
 	let { email, pswd, name, address, phone, picture } = req.body;
 
-	const findRes = userModel.findOne({
+	const findRes = await userModel.findOne({
 		email: email,
 	});
-	if (!findRes) res.send("already registered");
-	else {
+	console.log(1);
+	const hashed = await bcrypt.hash(pswd, Number(process.env.SALT_ROUNDS));
+	console.log(2);
+
+	if (!findRes) {
+		console.log(3);
+
 		// create new record
 		let newUserRecord = new userModel({
 			email: email,
-			pswd: pswd,
+			pswd: hashed,
 			name: name,
 			address: address,
 			phone: phone,
 			picture: picture,
 		});
-		console.log("new record: ", newUserRecord);
 		// save record in db
-		newUserRecord.save();
+		await newUserRecord.save();
 		// success response
 
 		res.send("Register Successfully");
+	} else {
+		res.send("already registered");
 	}
 });
 

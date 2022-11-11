@@ -1,6 +1,6 @@
 require("dotenv").config();
 // modules
-import express from "express";
+import express, { Request, Response } from "express";
 import path from "path";
 import cors from "cors";
 import cookieParser from "cookie-parser";
@@ -18,20 +18,21 @@ const publicFolder = path.join(__dirname, "public");
 app.use(express.static(publicFolder));
 
 // middleware controller use
+app.use(cookieParser());
 // cors
 app.use(
 	cors({
 		credentials: true,
 		origin: ["http://localhost:3000"],
+		methods: ["POST", "GET", "PUT", "DELETE", "OPTIONS"],
 	})
 );
-app.use(cookieParser());
 // login register controller
 app.use(userController);
 // home controlker
 app.use(homeController);
 // base
-app.get("/", async (req: any, res: any) => {
+app.get("/", async (req: Request, res: Response) => {
 	res.send("Welcome to HR Portal");
 });
 
@@ -40,4 +41,4 @@ app.get("/", async (req: any, res: any) => {
 //   res.status(404).render('404Page');
 // });
 
-module.exports = app;
+export default app;

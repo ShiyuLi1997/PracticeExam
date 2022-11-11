@@ -1,9 +1,7 @@
-const app = require("./app");
 require("dotenv").config();
+import app from "./app";
+import "./db";
 const port = process.env.PORT;
-
-require("./db").once("open", () => {
-	app.listen(port, () => {
-		console.log(`Server is up and running on port ${port}`);
-	});
+app.listen(port, () => {
+	console.log(`Server is up and running on port ${port}`);
 });

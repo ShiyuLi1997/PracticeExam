@@ -21,7 +21,10 @@ import Navbar from "react-bootstrap/Navbar";
 import Cookies from "universal-cookie";
 // axios
 import axios from "axios";
-axios.defaults.withCredentials = true;
+axios.defaults.withCredentials = false;
+axios.defaults.headers["Access-Control-Allow-Origin"] =
+	"Get,Post,Put,Delete,Options";
+axios.defaults.baseURL = "http://localhost:4000";
 // constants
 const cookies = new Cookies();
 const URL = "http://localhost:4000/home";
@@ -29,7 +32,7 @@ const URL = "http://localhost:4000/home";
 
 interface layoutProp {
 	hasJwtToken: Boolean;
-	deleteJwt: any;
+	deleteJwt: Function;
 }
 
 function App() {

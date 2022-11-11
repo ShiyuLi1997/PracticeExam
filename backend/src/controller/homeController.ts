@@ -3,7 +3,7 @@ import express, { Request, Response } from "express";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 import cookieParser from "cookie-parser";
-import { productModel } from "../model/Products";
+import { customerModel } from "../model/Customers";
 import jwtMiddleware from "../middleware/jwtMiddleware";
 
 var router = express.Router();
@@ -15,8 +15,8 @@ router.get(
 	async function (req: Request, res: Response) {
 		try {
 			// get data from product collection in Mongodb
-			const allProducts = await productModel.find({});
-			res.send({ message: "success", data: allProducts });
+			const allCustomers = await customerModel.find({});
+			res.send({ message: "success", data: allCustomers });
 		} catch (err) {
 			console.log(err);
 			res.send({ message: "failed" });
@@ -30,12 +30,14 @@ router.post(
 	jwtMiddleware,
 	async function (req: Request, res: Response) {
 		// create new record
-		let newProductRecord = new productModel({
-			productName: req.body.productName,
-			productPrice: req.body.productPrice,
+		let newCustomerRecord = new customerModel({
+			customerName: req.body.customerName,
+			customerAddress: req.body.customerAddress,
+			customerPhone: req.body.customerPhone,
+			customerEmail: req.body.customerEmail,
 		});
 		// save the new record to MongoDb
-		await newProductRecord.save();
+		await newCustomerRecord.save();
 
 		res.send("ok");
 	}
@@ -47,7 +49,7 @@ router.put(
 	jwtMiddleware,
 	async function (req: Request, res: Response) {
 		const { _id: _id } = req.body;
-		await productModel.findOneAndUpdate({ _id: _id }, req.body);
+		await customerModel.findOneAndUpdate({ _id: _id }, req.body);
 		res.send("ok");
 	}
 );
@@ -58,7 +60,7 @@ router.delete(
 	jwtMiddleware,
 	async function (req: Request, res: Response) {
 		const id = req.params.id;
-		await productModel.deleteOne({ _id: id });
+		await customerModel.deleteOne({ _id: id });
 		res.send("ok");
 	}
 );

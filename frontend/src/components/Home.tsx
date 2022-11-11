@@ -17,13 +17,17 @@ const cookies = new Cookies();
 // types ts
 export type axiosHomeGetResponseItem = {
 	_id: String;
-	productName: String;
-	productPrice: String;
+	customerName: String;
+	customerAddress: String;
+	customerPhone: String;
+	customerEmail: String;
 	edit: Boolean;
 };
 interface axiosHomePayload {
-	productName: String;
-	productPrice: String;
+	customerName: String;
+	customerAddress: String;
+	customerPhone: String;
+	customerEmail: String;
 }
 interface axiosDeleteRow {
 	_id: String;
@@ -32,22 +36,34 @@ interface axiosDeleteRow {
 interface axiosPutRow extends axiosHomePayload, axiosDeleteRow {}
 
 function Home() {
-	let [data, setData] = useState<Array<axiosHomeGetResponseItem>>([]);
-	let [productName, setProductName] = useState<String>("");
-	let [productPrice, setProductPrice] = useState<String>("");
+	let [data, setData] = useState<Array<axiosHomeGetResponseItem>>([
+		{
+			_id: "123",
+			customerName: "test name",
+			customerAddress: "test address",
+			customerPhone: "1231231234",
+			customerEmail: "test@test.test",
+			edit: false,
+		},
+	]);
+	let [customerName, setCustomerName] = useState<String>("");
+	let [customerAddress, setCustomerAddress] = useState<String>("");
+	let [customerPhone, setCustomerPhone] = useState<String>("");
+	let [customerEmail, setCustomerEmail] = useState<String>("");
 	const navigate = useNavigate();
 
 	const retreiveDataFromDatabase = () => {
 		axios
 			.get(URL)
 			.then((res) => {
+				console.log("res.data.data: ", res.data.data);
 				const formattedData = res.data.data.map(
 					(e: axiosHomeGetResponseItem) => {
 						e.edit = false;
 						return e;
 					}
 				);
-				console.log("homePage data: ", formattedData);
+				console.log(formattedData);
 				setData(formattedData);
 			})
 			.catch((e) => {
@@ -56,35 +72,17 @@ function Home() {
 	};
 
 	useEffect(() => {
-		// const jwtIntervalChecker = setInterval(() => {
-		// 	// validate jwt
-		// 	const jwt = cookies.get("jwt");
-		// 	if (!jwt) {
-		// 		navigate("/login");
-		// 	} else {
-		// 		axios
-		// 			.post(URL, { jwt: jwt })
-		// 			.then((res) => {
-		// 				if (res.data.message === "invalid token") {
-		// 					cookies.remove("jwt");
-		// 					navigate("/login");
-		// 				}
-		// 			})
-		// 			.catch((err) => console.log(err));
-		// 	}
-		// }, 500);
-
 		retreiveDataFromDatabase();
-
-		// return () => clearInterval(jwtIntervalChecker);
 	}, []);
 
 	function handleSubmit(e: React.SyntheticEvent) {
 		e.preventDefault();
 		axios
 			.post<axiosHomePayload>(URL + "/add", {
-				productName: productName,
-				productPrice: productPrice,
+				customerName: customerName,
+				customerAddress: customerAddress,
+				customerPhone: customerPhone,
+				customerEmail: customerEmail,
 			})
 			.then((res) => {
 				retreiveDataFromDatabase();
@@ -129,15 +127,19 @@ function Home() {
 	function handleUpdateConfirm(
 		e: React.SyntheticEvent,
 		id: String,
-		nameChange: String,
-		priceChange: String
+		customerNameChange: String,
+		customerAddressChange: String,
+		customerPhoneChange: String,
+		customerEmailChange: String
 	) {
 		// axios put request to update one row
 		axios
 			.put<axiosPutRow>(URL + "/put", {
 				_id: id,
-				productName: nameChange,
-				productPrice: priceChange,
+				customerName: customerNameChange,
+				customerAddress: customerAddressChange,
+				customerPhone: customerPhoneChange,
+				customerEmail: customerEmailChange,
 			})
 			.then((res) => {
 				retreiveDataFromDatabase();
@@ -158,18 +160,30 @@ function Home() {
 				>
 					<Form.Control
 						type="text"
-						style={{ width: "46%" }}
-						placeholder="Enter Product Name You Want to Add"
+						placeholder="Name"
 						onChange={(e) => {
-							setProductName(e.target.value);
+							setCustomerName(e.target.value);
 						}}
 					/>
 					<Form.Control
 						type="text"
-						style={{ width: "46%" }}
-						placeholder="Enter Price for This Product"
+						placeholder="Address"
 						onChange={(e) => {
-							setProductPrice(e.target.value);
+							setCustomerAddress(e.target.value);
+						}}
+					/>
+					<Form.Control
+						type="text"
+						placeholder="Phone"
+						onChange={(e) => {
+							setCustomerPhone(e.target.value);
+						}}
+					/>
+					<Form.Control
+						type="text"
+						placeholder="Email"
+						onChange={(e) => {
+							setCustomerEmail(e.target.value);
 						}}
 					/>
 					<Button
@@ -207,8 +221,10 @@ function Home() {
 					</td> */}
 					<tr>
 						<th>#</th>
-						<th> Product </th>
-						<th> Price </th>
+						<th> customerName </th>
+						<th> customerAddress </th>
+						<th> customerPhone </th>
+						<th> customerEmail</th>
 						<th> </th>
 						<th> </th>
 					</tr>

@@ -25,8 +25,12 @@ function HomeProductRow(props: homeProductRowProps) {
 		cancelUpdate,
 		handleUpdateConfirm,
 	} = props;
-	let [nameChange, setNameChange] = useState(e.productName);
-	let [priceChange, setPriceChange] = useState(e.productPrice);
+	let [customerNameChange, setCustomerNameChange] = useState(e.customerName);
+	let [customerAddressChange, setcustomerAddressChange] = useState(
+		e.customerAddress
+	);
+	let [customerPhoneChange, setCustomerPhoneChange] = useState(e.customerPhone);
+	let [customerEmailChange, setCustomerEmailChange] = useState(e.customerEmail);
 
 	return (
 		<tr>
@@ -36,21 +40,42 @@ function HomeProductRow(props: homeProductRowProps) {
 					<td>
 						<Form.Control
 							type="text"
-							value={nameChange as string}
-							onChange={(event) => setNameChange(event.target.value)}
+							value={customerNameChange as string}
+							onChange={(event) => setCustomerNameChange(event.target.value)}
 						/>
 					</td>
 					<td>
 						<Form.Control
 							type="text"
-							value={priceChange as string}
-							onChange={(event) => setPriceChange(event.target.value)}
+							value={customerAddressChange as string}
+							onChange={(event) => setcustomerAddressChange(event.target.value)}
+						/>
+					</td>
+					<td>
+						<Form.Control
+							type="text"
+							value={customerPhoneChange as string}
+							onChange={(event) => setCustomerPhoneChange(event.target.value)}
+						/>
+					</td>
+					<td>
+						<Form.Control
+							type="text"
+							value={customerEmailChange as string}
+							onChange={(event) => setCustomerEmailChange(event.target.value)}
 						/>
 					</td>
 					<td>
 						<Button
 							onClick={(event: React.SyntheticEvent) => {
-								handleUpdateConfirm(event, e._id, nameChange, priceChange);
+								handleUpdateConfirm(
+									event,
+									e._id,
+									customerNameChange,
+									customerAddressChange,
+									customerPhoneChange,
+									customerEmailChange
+								);
 							}}
 						>
 							Confirm
@@ -69,8 +94,10 @@ function HomeProductRow(props: homeProductRowProps) {
 			) : (
 				<>
 					<td>{index + 1}</td>
-					<td>{e.productName}</td>
-					<td>${e.productPrice}</td>
+					<td>{e.customerName}</td>
+					<td>${e.customerAddress}</td>
+					<td>{e.customerPhone}</td>
+					<td>${e.customerEmail}</td>
 					<td>
 						<Button
 							onClick={(event: React.SyntheticEvent) => {

@@ -27,6 +27,7 @@ interface AxiosRegisterPayload {
 function Login(props: loginProp) {
 	let [email, setEmail] = useState("");
 	let [pswd, setPswd] = useState("");
+	let [loginErrorMessage, setLoginErrorMessage] = useState("");
 	const navigate = useNavigate();
 
 	// check for jwt token
@@ -36,7 +37,6 @@ function Login(props: loginProp) {
 		if (jwt) {
 			// make a post request to node server to see if it is valid
 			axios.get(URL).then((res) => {
-				console.log(res);
 				if (res.data.message === "invalid token") {
 					// if not valid token, delete this old token
 					console.log("invalid token");
@@ -63,15 +63,28 @@ function Login(props: loginProp) {
 			.then((res) => {
 				const msg = res.data.message;
 				const jwt = res.data.jwt;
-				// store jwt in cookie
-				cookies.set("jwt", jwt);
-				props.setHasJwtToken(true);
-				navigate("/home", { state: { email: email } });
+				console.log("msg: ", msg);
+				if (msg === "invalid token") {
+					setLoginErrorMessage(msg);
+					navigate("/login");
+				} else if (msg === "pswd incorrect") {
+					setLoginErrorMessage(msg);
+					navigate("/login");
+				} else if (msg === "not yet registered") {
+					setLoginErrorMessage(msg);
+					navigate("/login");
+				} else if (msg === "login successful") {
+					// store jwt in cookie
+					cookies.set("jwt", jwt);
+					props.setHasJwtToken(true);
+					navigate("/home", { state: { email: email } });
+				}
 			})
 			.catch((err) => alert(err));
 	}
 	return (
 		<>
+			{loginErrorMessage}
 			<Form
 				style={{
 					width: "600px",
