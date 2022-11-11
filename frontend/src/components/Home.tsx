@@ -56,14 +56,14 @@ function Home() {
 		axios
 			.get(URL)
 			.then((res) => {
-				console.log("res.data.data: ", res.data.data);
+				// console.log("res.data.data: ", res.data.data);
 				const formattedData = res.data.data.map(
 					(e: axiosHomeGetResponseItem) => {
 						e.edit = false;
 						return e;
 					}
 				);
-				console.log(formattedData);
+				// console.log(formattedData);
 				setData(formattedData);
 			})
 			.catch((e) => {

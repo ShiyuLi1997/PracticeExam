@@ -62,13 +62,9 @@ router.post("/register", async function (req: Request, res: Response) {
 	const findRes = await userModel.findOne({
 		email: email,
 	});
-	console.log(1);
 	const hashed = await bcrypt.hash(pswd, Number(process.env.SALT_ROUNDS));
-	console.log(2);
 
 	if (!findRes) {
-		console.log(3);
-
 		// create new record
 		let newUserRecord = new userModel({
 			email: email,

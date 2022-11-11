@@ -63,7 +63,7 @@ function Login(props: loginProp) {
 			.then((res) => {
 				const msg = res.data.message;
 				const jwt = res.data.jwt;
-				console.log("msg: ", msg);
+				// console.log("msg: ", msg);
 				if (msg === "invalid token") {
 					setLoginErrorMessage(msg);
 					navigate("/login");
