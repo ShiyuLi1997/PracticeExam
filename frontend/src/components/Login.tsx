@@ -35,7 +35,7 @@ function Login(props: loginProp) {
 		// there is a jwt in cookies
 		if (jwt) {
 			// make a post request to node server to see if it is valid
-			axios.post(URL, { jwt: jwt }).then((res) => {
+			axios.get(URL).then((res) => {
 				console.log(res);
 				if (res.data.message === "invalid token") {
 					// if not valid token, delete this old token
@@ -57,7 +57,7 @@ function Login(props: loginProp) {
 			email: email,
 			pswd: pswd,
 		};
-		// axios request for login
+		// axios request for login with email and pswd
 		axios
 			.post<AxiosRegisterPayload>(URL, payload)
 			.then((res) => {

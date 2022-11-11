@@ -2,11 +2,9 @@ import express, { Request, Response, NextFunction } from "express";
 import jwt, { Secret, JwtPayload } from "jsonwebtoken";
 
 function jwtMiddleware(req: Request, res: Response, next: NextFunction) {
-	console.log("in jwt middleware");
-	console.log("base: ", req.baseUrl);
-	console.log();
-
-	if (req.body.jwt) {
+	const jwt = req.cookies.jwt;
+	console.log("in jwtmiddleware: ", jwt);
+	if (jwt) {
 		console.log("there is jwt in cookie");
 		let valid = false;
 		let decoded: string | JwtPayload = "";
@@ -22,7 +20,9 @@ function jwtMiddleware(req: Request, res: Response, next: NextFunction) {
 			res.send({ message: "invalid token" });
 		}
 		// send response
+	} else {
+		res.send({ message: "invalid token" });
 	}
-	next();
+	// next();
 }
 export default jwtMiddleware;

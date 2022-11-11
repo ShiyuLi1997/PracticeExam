@@ -56,27 +56,27 @@ function Home() {
 	};
 
 	useEffect(() => {
-		const jwtIntervalChecker = setInterval(() => {
-			// validate jwt
-			const jwt = cookies.get("jwt");
-			if (!jwt) {
-				navigate("/login");
-			} else {
-				axios
-					.post(URL, { jwt: jwt })
-					.then((res) => {
-						if (res.data.message === "invalid token") {
-							cookies.remove("jwt");
-							navigate("/login");
-						}
-					})
-					.catch((err) => console.log(err));
-			}
-		}, 500);
+		// const jwtIntervalChecker = setInterval(() => {
+		// 	// validate jwt
+		// 	const jwt = cookies.get("jwt");
+		// 	if (!jwt) {
+		// 		navigate("/login");
+		// 	} else {
+		// 		axios
+		// 			.post(URL, { jwt: jwt })
+		// 			.then((res) => {
+		// 				if (res.data.message === "invalid token") {
+		// 					cookies.remove("jwt");
+		// 					navigate("/login");
+		// 				}
+		// 			})
+		// 			.catch((err) => console.log(err));
+		// 	}
+		// }, 500);
 
 		retreiveDataFromDatabase();
 
-		return () => clearInterval(jwtIntervalChecker);
+		// return () => clearInterval(jwtIntervalChecker);
 	}, []);
 
 	function handleSubmit(e: React.SyntheticEvent) {

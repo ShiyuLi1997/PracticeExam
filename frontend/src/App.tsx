@@ -21,6 +21,7 @@ import Navbar from "react-bootstrap/Navbar";
 import Cookies from "universal-cookie";
 // axios
 import axios from "axios";
+axios.defaults.withCredentials = true;
 // constants
 const cookies = new Cookies();
 const URL = "http://localhost:4000/home";

@@ -75,5 +75,4 @@ router.post("/register", function (req: Request, res: Response) {
 	}
 });
 
-// module.exports = router;
 export default router;

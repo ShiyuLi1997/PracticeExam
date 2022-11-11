@@ -1,12 +1,15 @@
 require("dotenv").config();
 // modules
-const express = require("express");
-const app = express();
-const path = require("path");
-const cors = require("cors");
+import express from "express";
+import path from "path";
+import cors from "cors";
+import cookieParser from "cookie-parser";
+
 // controller
 import userController from "./controller/login";
 import homeController from "./controller/homeController";
+// constants
+const app = express();
 
 // json format
 app.use(express.json());
@@ -16,8 +19,13 @@ app.use(express.static(publicFolder));
 
 // middleware controller use
 // cors
-app.use(cors());
-
+app.use(
+	cors({
+		credentials: true,
+		origin: ["http://localhost:3000"],
+	})
+);
+app.use(cookieParser());
 // login register controller
 app.use(userController);
 // home controlker
