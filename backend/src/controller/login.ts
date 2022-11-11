@@ -39,6 +39,7 @@ router.post(
 						{ expiresIn: "1h" }
 					);
 					// send back response
+					// res.cookie("test","test")
 					res.send({ message: "login successful", jwt: signed_jwt });
 				} else {
 					res.send({ message: "password incorrect" });

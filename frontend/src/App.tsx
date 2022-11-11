@@ -22,14 +22,11 @@ import Cookies from "universal-cookie";
 // axios
 import axios from "axios";
 // axios.defaults.withCredentials = true;
-
-// axios.defaults.headers["Access-Control-Allow-Origin"] =
-// 	"Get,Post,Put,Delete,Options";
 // axios.defaults.baseURL = "http://localhost:4000";
-// axios.defaults.headers = { "Access-Control-Allow-Origin: origin-list" };
+
 // constants
 const cookies = new Cookies();
-const URL = "http://localhost:4000/home";
+const URL = "http://localhost:4000";
 // type define
 
 interface layoutProp {
@@ -41,9 +38,8 @@ function App() {
 	let [hasJwtToken, setHasJwtToken] = useState(false);
 
 	useEffect(() => {
-		// verify jwt
 		const jwt = cookies.get("jwt");
-		axios.post(URL);
+		axios.get(URL);
 		if (jwt) {
 			setHasJwtToken(true);
 			console.log("has jwt");
@@ -51,6 +47,22 @@ function App() {
 			console.log("dont have jwt");
 			redirect("/login");
 		}
+		// verify jwt
+		// axios
+		// 	.get("/check-jwt-status")
+		// 	.then((res) => {
+		// 		if (res.status === 200) {
+		// 			setHasJwtToken(true);
+		// 			console.log("has jwt");
+		// 		} else {
+		// 			setHasJwtToken(false);
+		// 			console.log("dont have jwt");
+		// 		}
+		// 	})
+		// 	.catch(() => {
+		// 		setHasJwtToken(false);
+		// 		console.log("dont have jwt");
+		// 	});
 	}, []);
 
 	function deleteJwt() {
