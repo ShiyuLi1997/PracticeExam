@@ -4,6 +4,7 @@ import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 
 import { productModel } from "../model/Products";
+import jwtMiddleware from "../middleware/jwtMiddleware";
 
 var router = express.Router();
 
@@ -23,34 +24,26 @@ router.get("/home", async function (req: Request, res: Response) {
 });
 
 // add one product
-router.post("/home/add", async function (req: Request, res: Response) {
-	// create new record
-	let newProductRecord = new productModel({
-		productName: req.body.productName,
-		productPrice: req.body.productPrice,
-	});
-	// save the new record to MongoDb
-	await newProductRecord.save();
+router.post(
+	"/home/add",
+	jwtMiddleware,
+	async function (req: Request, res: Response) {
+		// create new record
+		let newProductRecord = new productModel({
+			productName: req.body.productName,
+			productPrice: req.body.productPrice,
+		});
+		// save the new record to MongoDb
+		await newProductRecord.save();
 
-	res.send("ok");
-});
+		res.send("ok");
+	}
+);
 
 // add one product
 router.put("/home/put", async function (req: Request, res: Response) {
-	console.log("in home post backend add one");
-	console.log("req.body: ", req.body);
-	const {
-		_id: _id,
-		productName: nameChange,
-		productPrice: priceChange,
-	} = req.body;
-	// let findRes = productModel.findOne({ _id: _id });
-
+	const { _id: _id } = req.body;
 	await productModel.findOneAndUpdate({ _id: _id }, req.body);
-
-	// save the new record to MongoDb
-	// await newProductRecord.save();
-
 	res.send("ok");
 });
 

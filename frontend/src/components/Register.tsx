@@ -4,6 +4,7 @@ import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 // axios
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 // s3 config
 export const s3Config = {
 	bucketName: "my-test-bucket-caleb",
@@ -35,6 +36,7 @@ function Register() {
 	let [phone, setPhone] = useState("");
 	let [picture, setPicture] = useState<File | null>();
 	let [errorMessage, setErrorMessage] = useState("");
+	const navigate = useNavigate();
 
 	function onSubmit(e: any) {
 		e.preventDefault();
@@ -63,10 +65,11 @@ function Register() {
 			.then((res) => {
 				console.log("backend return: ", res);
 				console.log("backend return data: ", res.data);
+				navigate("/login");
 			})
 			.catch((err) => alert(err));
 
-		setErrorMessage("Name is not defined");
+		setErrorMessage("Account already exist");
 	}
 
 	return (

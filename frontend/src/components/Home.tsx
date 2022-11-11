@@ -1,14 +1,18 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
-import {} from "react-router-dom";
+import { redirect, useNavigate } from "react-router-dom";
 // components
 import HomeProductRow from "./HomeProductRow";
 // bootstrap
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import Table from "react-bootstrap/Table";
+// cookie
+import Cookies from "universal-cookie";
+
 // constants
 const URL = "http://localhost:4000/home";
+const cookies = new Cookies();
 
 // types ts
 export type axiosHomeGetResponseItem = {
@@ -31,6 +35,7 @@ function Home() {
 	let [data, setData] = useState<Array<axiosHomeGetResponseItem>>([]);
 	let [productName, setProductName] = useState<String>("");
 	let [productPrice, setProductPrice] = useState<String>("");
+	const navigate = useNavigate();
 
 	const retreiveDataFromDatabase = () => {
 		axios
@@ -49,13 +54,33 @@ function Home() {
 				console.log(e);
 			});
 	};
+
 	useEffect(() => {
+		const jwtIntervalChecker = setInterval(() => {
+			// validate jwt
+			const jwt = cookies.get("jwt");
+			if (!jwt) {
+				navigate("/login");
+			} else {
+				axios
+					.post(URL, { jwt: jwt })
+					.then((res) => {
+						if (res.data.message === "invalid token") {
+							cookies.remove("jwt");
+							navigate("/login");
+						}
+					})
+					.catch((err) => console.log(err));
+			}
+		}, 500);
+
 		retreiveDataFromDatabase();
+
+		return () => clearInterval(jwtIntervalChecker);
 	}, []);
 
 	function handleSubmit(e: React.SyntheticEvent) {
-		console.log("in handle submit in home page");
-		console.log(productName, " ", productPrice);
+		e.preventDefault();
 		axios
 			.post<axiosHomePayload>(URL + "/add", {
 				productName: productName,
@@ -71,9 +96,9 @@ function Home() {
 	function handleDelete(e: React.SyntheticEvent, id: String) {
 		e.preventDefault();
 		axios
-			.delete<axiosDeleteRow>(`${URL}/delete/${id}`)
+			.delete(`${URL}/delete/${id}`)
 			.then((res) => {
-				retreiveDataFromDatabase(); // SLOW!!! Improvement: change local state first then fire axios
+				retreiveDataFromDatabase();
 			})
 			.catch((e) => {
 				console.log(e);

@@ -7,7 +7,7 @@ import {
 	Outlet,
 	BrowserRouter as Router,
 	redirect,
-	Navigate,
+	useNavigate,
 } from "react-router-dom";
 // components
 import Login from "./components/Login";
@@ -19,22 +19,25 @@ import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
 // cookie
 import Cookies from "universal-cookie";
+// axios
+import axios from "axios";
+// constants
 const cookies = new Cookies();
-
+const URL = "http://localhost:4000/home";
 // type define
 
-type layoutProp = {
+interface layoutProp {
 	hasJwtToken: Boolean;
 	deleteJwt: any;
-};
+}
 
 function App() {
 	let [hasJwtToken, setHasJwtToken] = useState(false);
 
 	useEffect(() => {
-		// document.cookie = "cookiename=Some Name; path=/";
+		// verify jwt
 		const jwt = cookies.get("jwt");
-		console.log("jwt in app useeffect: ", jwt);
+		axios.post(URL);
 		if (jwt) {
 			setHasJwtToken(true);
 			console.log("has jwt");
@@ -78,6 +81,7 @@ function App() {
 }
 
 function Layout(props: layoutProp) {
+	const navigate = useNavigate();
 	return (
 		<>
 			{/* Navbar */}
@@ -93,8 +97,9 @@ function Layout(props: layoutProp) {
 									<>
 										<Nav.Link href="home">Home</Nav.Link>
 										<Nav.Link
-											href="login"
+											href=""
 											onClick={() => {
+												navigate("login");
 												props.deleteJwt();
 											}}
 										>

@@ -14,14 +14,13 @@ import { Dispatch, SetStateAction } from "react";
 // init constants
 const URL = "http://localhost:4000/login";
 const cookies = new Cookies();
-
 // type for ts
 interface loginProp {
 	setHasJwtToken: Dispatch<SetStateAction<boolean>>;
 }
 interface AxiosRegisterPayload {
-	email: string;
-	name: string;
+	message: string;
+	jwt: string;
 }
 
 // login component
@@ -38,7 +37,7 @@ function Login(props: loginProp) {
 			// make a post request to node server to see if it is valid
 			axios.post(URL, { jwt: jwt }).then((res) => {
 				console.log(res);
-				if ((res.data as any).message === "valid token") {
+				if (res.data.message === "invalid token") {
 					// if not valid token, delete this old token
 					console.log("invalid token");
 					cookies.remove("jwt");
@@ -46,34 +45,25 @@ function Login(props: loginProp) {
 					// if valid token, then navigate to home page
 					console.log("valid token");
 					props.setHasJwtToken(true);
-					const userEmail = (res.data as any).email;
+					const userEmail = res.data.email;
 					navigate("/home", { state: { email: userEmail } });
 				}
 			});
 		}
 	}, []);
 	function onSubmit(e: React.SyntheticEvent) {
-		// e.preventDefault();
-		// console.log("in Submmit button click");
-		// console.log("email: ", email);
-		// console.log("pswd: ", pswd);
-
+		e.preventDefault();
 		const payload = {
 			email: email,
 			pswd: pswd,
 		};
-		console.log(payload);
-
+		// axios request for login
 		axios
 			.post<AxiosRegisterPayload>(URL, payload)
 			.then((res) => {
-				console.log("backend return: ", res);
-				console.log("backend return data: ", res.data);
-				const msg = (res.data as any).message;
-				const jwt = (res.data as any).jwt;
-				console.log(msg);
-				console.log(jwt);
-				// store jwt in session
+				const msg = res.data.message;
+				const jwt = res.data.jwt;
+				// store jwt in cookie
 				cookies.set("jwt", jwt);
 				props.setHasJwtToken(true);
 				navigate("/home", { state: { email: email } });
@@ -125,7 +115,6 @@ function Login(props: loginProp) {
 					Submit
 				</Button>
 			</Form>
-			<a></a>
 		</>
 	);
 }
