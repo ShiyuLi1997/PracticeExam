@@ -201,24 +201,6 @@ function Home() {
 			{/* display all items */}
 			<Table>
 				<thead>
-					{/* <tr>
-						<th>Add Product</th>
-						<th> Product Name </th>
-						<th> Product Price </th>
-						<th> </th>
-						<th> </th>
-					</tr>
-					<td> </td>
-					<td>
-						<Form.Control
-							type="text"
-							style={{ outline: "none", border: "none" }}
-							placeholder="Enter Product Name"
-							onChange={(e) => {
-								setProductName(e.target.value);
-							}}
-						/>
-					</td> */}
 					<tr>
 						<th>#</th>
 						<th> customerName </th>

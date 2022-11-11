@@ -95,9 +95,9 @@ function HomeProductRow(props: homeProductRowProps) {
 				<>
 					<td>{index + 1}</td>
 					<td>{e.customerName}</td>
-					<td>${e.customerAddress}</td>
+					<td>{e.customerAddress}</td>
 					<td>{e.customerPhone}</td>
-					<td>${e.customerEmail}</td>
+					<td>{e.customerEmail}</td>
 					<td>
 						<Button
 							onClick={(event: React.SyntheticEvent) => {
