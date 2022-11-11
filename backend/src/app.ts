@@ -20,13 +20,14 @@ app.use(express.static(publicFolder));
 // middleware controller use
 app.use(cookieParser());
 // cors
-app.use(
-	cors({
-		credentials: true,
-		origin: ["http://localhost:3000"],
-		methods: ["POST", "GET", "PUT", "DELETE", "OPTIONS"],
-	})
-);
+const corsconfig = {
+	credentials: true,
+	origin: "http://localhost:3000",
+	// methods: ["POST", "GET", "PUT", "DELETE", "OPTIONS"],
+};
+app.use(cors(corsconfig));
+app.options("*", cors(corsconfig));
+
 // login register controller
 app.use(userController);
 // home controlker
