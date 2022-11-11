@@ -87,7 +87,6 @@ function Login(props: loginProp) {
 	}
 	return (
 		<>
-			{loginErrorMessage}
 			<Form
 				style={{
 					width: "600px",
@@ -96,6 +95,7 @@ function Login(props: loginProp) {
 				}}
 			>
 				<h3> Login </h3>
+				<p>{loginErrorMessage}</p>
 				<Form.Group className="mb-3" controlId="formBasicEmail">
 					<Form.Label>Email address</Form.Label>
 					<Form.Control
