@@ -24,7 +24,6 @@ function App() {
 							Register
 						</Route>
 					</Route>
-					{/* another Route group for login and register */}
 					<Route path="/" element={<RequireAuth></RequireAuth>}>
 						<Route path="home" element={<Home />}>
 							Home

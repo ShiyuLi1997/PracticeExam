@@ -5,6 +5,8 @@ import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
 // router dom
 import { Outlet, useNavigate } from "react-router-dom";
+import Cookies from "universal-cookie";
+const cookies = new Cookies();
 
 function Layout() {
 	const navigate = useNavigate();
@@ -27,6 +29,8 @@ function Layout() {
 								<Nav.Link
 									href=""
 									onClick={() => {
+										console.log("logout click: ");
+										cookies.remove("jwt");
 										navigate("/login");
 									}}
 								>
