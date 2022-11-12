@@ -1,144 +1,40 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import "./App.css";
 // react-router-dom
-import {
-	Routes,
-	Route,
-	Outlet,
-	BrowserRouter as Router,
-	redirect,
-	useNavigate,
-} from "react-router-dom";
+import { Routes, Route, BrowserRouter as Router } from "react-router-dom";
 // components
 import Login from "./components/Login";
 import Register from "./components/Register";
 import Home from "./components/Home";
-// bootstrap components
-import Container from "react-bootstrap/Container";
-import Nav from "react-bootstrap/Nav";
-import Navbar from "react-bootstrap/Navbar";
-// cookie
-import Cookies from "universal-cookie";
-// axios
-import axios from "axios";
-// axios.defaults.withCredentials = true;
-// axios.defaults.baseURL = "http://localhost:4000";
+// import Layout from "./components/Layout";
+import RequireAuth from "./components/RequireAuth";
 
-// constants
-const cookies = new Cookies();
-const URL = "http://localhost:4000";
 // type define
 
-interface layoutProp {
-	hasJwtToken: Boolean;
-	deleteJwt: Function;
-}
-
 function App() {
-	let [hasJwtToken, setHasJwtToken] = useState(false);
-
-	useEffect(() => {
-		const jwt = cookies.get("jwt");
-		axios.get(URL);
-		if (jwt) {
-			setHasJwtToken(true);
-			console.log("has jwt");
-		} else {
-			console.log("dont have jwt");
-			redirect("/login");
-		}
-		// verify jwt
-		// axios
-		// 	.get("/check-jwt-status")
-		// 	.then((res) => {
-		// 		if (res.status === 200) {
-		// 			setHasJwtToken(true);
-		// 			console.log("has jwt");
-		// 		} else {
-		// 			setHasJwtToken(false);
-		// 			console.log("dont have jwt");
-		// 		}
-		// 	})
-		// 	.catch(() => {
-		// 		setHasJwtToken(false);
-		// 		console.log("dont have jwt");
-		// 	});
-	}, []);
-
-	function deleteJwt() {
-		cookies.remove("jwt");
-		setHasJwtToken(false);
-	}
-
 	return (
 		<div className="App">
-			{/* Routes with react-router-dom */}
 			<Router>
 				<Routes>
-					<Route
-						path="/"
-						element={<Layout hasJwtToken={hasJwtToken} deleteJwt={deleteJwt} />}
-					>
-						<Route
-							path="login"
-							element={<Login setHasJwtToken={setHasJwtToken} />}
-						>
+					<Route>
+						<Route path="login" element={<Login />}>
 							Login
 						</Route>
 						<Route path="register" element={<Register />}>
 							Register
 						</Route>
+					</Route>
+					{/* another Route group for login and register */}
+					<Route path="/" element={<RequireAuth></RequireAuth>}>
 						<Route path="home" element={<Home />}>
 							Home
 						</Route>
 					</Route>
+					<Route path="*" element={<h1>Oops Something went wrong</h1>}></Route>
 				</Routes>
 			</Router>
 		</div>
 	);
 }
 
-function Layout(props: layoutProp) {
-	const navigate = useNavigate();
-	return (
-		<>
-			{/* Navbar */}
-			<div className="navBar">
-				{/* Nav links with bootstrap */}
-				<Navbar bg="light" expand="lg">
-					<Container>
-						<Navbar.Toggle aria-controls="basic-navbar-nav" />
-						<Navbar.Collapse id="basic-navbar-nav">
-							<Nav className="me-auto">
-								{/* Nav links */}
-								{props.hasJwtToken ? (
-									<>
-										<Nav.Link href="home">Home</Nav.Link>
-										<Nav.Link
-											href=""
-											onClick={() => {
-												navigate("login");
-												props.deleteJwt();
-											}}
-										>
-											Logout
-										</Nav.Link>
-									</>
-								) : (
-									<>
-										<Nav.Link href="login">Login</Nav.Link>
-										<Nav.Link href="register">Register</Nav.Link>
-									</>
-								)}
-							</Nav>
-						</Navbar.Collapse>
-					</Container>
-				</Navbar>
-
-				{/* render what is clicked */}
-				<Outlet />
-			</div>
-		</>
-	);
-}
 export default App;

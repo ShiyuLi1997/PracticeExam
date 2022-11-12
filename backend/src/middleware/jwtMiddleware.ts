@@ -3,9 +3,9 @@ import jwt, { Secret, JwtPayload } from "jsonwebtoken";
 import cookieParser from "cookie-parser";
 
 function jwtMiddleware(req: Request, res: Response, next: NextFunction) {
-	next();
-	// const jwt = req.cookies.jwt;
-	// if (jwt) {
+	const token = req.headers["Authorization"];
+	console.log("middleware token: ", token);
+	// if (token) {
 	// 	// console.log("there is jwt in cookie: ", jwt);
 	// 	let decoded: string | JwtPayload = "";
 	// 	// validate token
@@ -25,5 +25,6 @@ function jwtMiddleware(req: Request, res: Response, next: NextFunction) {
 	// 		res.send({ message: "invalid token" });
 	// 	}
 	// }
+	next();
 }
 export default jwtMiddleware;

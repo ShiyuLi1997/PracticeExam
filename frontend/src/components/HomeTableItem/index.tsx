@@ -1,36 +1,87 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, Dispatch, SetStateAction } from "react";
 // bootstrap
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
+import axios from "axios";
 // type
-import { axiosHomeGetResponseItem } from "./Home";
-// css
-import "./test.css";
+import { axiosHomeGetResponseItem } from "../Home";
+import { HOME_ADD, HOME_UPDATE, HOME_DELETE } from "../../config/constant";
 
+import { axiosPutRow } from "../HomeAddItemForm";
 interface homeProductRowProps {
 	e: axiosHomeGetResponseItem;
 	index: number;
-	handleDelete: Function;
-	handleUpdateStart: Function;
-	cancelUpdate: Function;
-	handleUpdateConfirm: Function;
+	data: Array<axiosHomeGetResponseItem>;
+	setData: Dispatch<Array<axiosHomeGetResponseItem>>;
+	retreiveDataFromDatabase: Function;
 }
 
-function HomeProductRow(props: homeProductRowProps) {
-	const {
-		e,
-		index,
-		handleDelete,
-		handleUpdateStart,
-		cancelUpdate,
-		handleUpdateConfirm,
-	} = props;
+function HomeTableItem(props: homeProductRowProps) {
+	const { e, index, data, setData, retreiveDataFromDatabase } = props;
 	let [customerNameChange, setCustomerNameChange] = useState(e.customerName);
 	let [customerAddressChange, setcustomerAddressChange] = useState(
 		e.customerAddress
 	);
 	let [customerPhoneChange, setCustomerPhoneChange] = useState(e.customerPhone);
 	let [customerEmailChange, setCustomerEmailChange] = useState(e.customerEmail);
+
+	function handleDelete(e: React.SyntheticEvent, id: String) {
+		e.preventDefault();
+		axios
+			.delete(`${HOME_DELETE}/${id}`)
+			.then((res) => {
+				retreiveDataFromDatabase();
+			})
+			.catch((e) => {
+				console.log(e);
+			});
+	}
+	function handleUpdateStart(e: React.SyntheticEvent, id: String) {
+		e.preventDefault();
+		const copyData = data.map((ele: axiosHomeGetResponseItem) => {
+			if (ele._id === id) {
+				ele.edit = true;
+				return ele;
+			}
+			return ele;
+		});
+		setData(copyData);
+	}
+	function cancelUpdate(e: React.SyntheticEvent, id: String) {
+		e.preventDefault();
+		const copyData = data.map((ele: axiosHomeGetResponseItem) => {
+			if (ele._id === id) {
+				ele.edit = false;
+				return ele;
+			}
+			return ele;
+		});
+		setData(copyData);
+	}
+	function handleUpdateConfirm(
+		e: React.SyntheticEvent,
+		id: String,
+		customerNameChange: String,
+		customerAddressChange: String,
+		customerPhoneChange: String,
+		customerEmailChange: String
+	) {
+		const payload = {
+			_id: id,
+			customerName: customerNameChange,
+			customerAddress: customerAddressChange,
+			customerPhone: customerPhoneChange,
+			customerEmail: customerEmailChange,
+		};
+		axios
+			.put<axiosPutRow>(HOME_UPDATE, payload)
+			.then((res) => {
+				retreiveDataFromDatabase();
+			})
+			.catch((err) => {
+				console.log(err);
+			});
+	}
 
 	return (
 		<tr>
@@ -123,4 +174,4 @@ function HomeProductRow(props: homeProductRowProps) {
 	);
 }
 
-export default HomeProductRow;
+export default HomeTableItem;
