@@ -64,10 +64,10 @@ function Home() {
 				<thead>
 					<tr>
 						<th>#</th>
-						<th> customerName </th>
-						<th> customerAddress </th>
-						<th> customerPhone </th>
-						<th> customerEmail</th>
+						<th> Name </th>
+						<th> Address </th>
+						<th> Phone </th>
+						<th> Email </th>
 						<th> </th>
 						<th> </th>
 					</tr>

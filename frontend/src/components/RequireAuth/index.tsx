@@ -2,7 +2,7 @@ import React from "react";
 import { useNavigate } from "react-router-dom";
 import Cookies from "universal-cookie";
 import Layout from "../Layout";
-const cookies = new Cookies();
+import { cookies } from "../../config/cookies";
 
 function RequireAuth() {
 	const navigate = useNavigate();

@@ -29,7 +29,7 @@ function App() {
 							Home
 						</Route>
 					</Route>
-					<Route path="*" element={<h1>Oops Something went wrong</h1>}></Route>
+					<Route path="*" element={<h3>Oops Something went wrong</h3>}></Route>
 				</Routes>
 			</Router>
 		</div>
