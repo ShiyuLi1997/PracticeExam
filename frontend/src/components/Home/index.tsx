@@ -7,10 +7,8 @@ import HomeAddItemForm from "../HomeAddItemForm";
 
 import Table from "react-bootstrap/Table";
 // cookie
-import Cookies from "universal-cookie";
 import { HOME_GET } from "../../config/constant";
-
-const cookies = new Cookies();
+import { cookies } from "../../config/cookies";
 
 // types ts
 export type axiosHomeGetResponseItem = {
@@ -24,8 +22,6 @@ export type axiosHomeGetResponseItem = {
 
 function Home() {
 	let [data, setData] = useState<Array<axiosHomeGetResponseItem>>([]);
-
-	const navigate = useNavigate();
 
 	const retreiveDataFromDatabase = () => {
 		axios

@@ -13,10 +13,10 @@ function CustomHeader() {
 				<Navbar.Toggle aria-controls="basic-navbar-nav" />
 				<Navbar.Collapse id="basic-navbar-nav">
 					<Nav className="me-auto">
-						{/* Nav links */}
-						<Nav.Link href="home">Home</Nav.Link>
+						{/* <Nav.Link href="home">Home</Nav.Link> */}
 						<Nav.Link
-							href=""
+							// href=""
+							className="logout-btn"
 							onClick={() => {
 								console.log("logout click: ");
 								console.log(

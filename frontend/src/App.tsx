@@ -16,13 +16,11 @@ function App() {
 		<div className="App">
 			<Router>
 				<Routes>
-					<Route>
-						<Route path="login" element={<Login />}>
-							Login
-						</Route>
-						<Route path="register" element={<Register />}>
-							Register
-						</Route>
+					<Route path="login" element={<Login />}>
+						Login
+					</Route>
+					<Route path="register" element={<Register />}>
+						Register
 					</Route>
 					<Route path="/" element={<RequireAuth></RequireAuth>}>
 						<Route path="home" element={<Home />}>

@@ -4,7 +4,7 @@ function CustomSideBar() {
 	return (
 		<>
 			<div className="sidebar">
-				<a className="active" href="#home">
+				<a className="active" href="">
 					Home
 				</a>
 			</div>

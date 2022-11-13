@@ -6,3 +6,9 @@
 .errorMessage {
 	color: "red";
 }
+
+.logoImg {
+	height: auto;
+	width: 100px;
+	position: fixed 0px 0px;
+}
