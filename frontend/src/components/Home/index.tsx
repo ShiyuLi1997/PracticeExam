@@ -5,7 +5,7 @@ import HomeAddItemForm from "../HomeAddItemForm";
 import Table from "react-bootstrap/Table";
 import { HOME } from "../../config/constant";
 import "../../config/axiosInterceptors";
-import "./Home.css";
+import "./home.css";
 
 export type axiosHomeGetResponseItem = {
 	_id: String;
