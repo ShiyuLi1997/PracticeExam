@@ -1,0 +1,13 @@
+How to set it up and running in dev mode:
+    1. "npm i" in both frontend and backend folder
+    2. in backend folder compose a .env file with the following content (the mongo key only has 1 week of white list all access from Nov 11 2022) (the port need to be 4000 for frontend to make API request, otherwise change the proxy in frontend json file)
+    3. "npm start" for frontend and "npm start" for backend
+    4. that is it
+
+
+
+.env
+MONGO_KEY = mongodb+srv://lishiyu6:T5IoLh1m0bMc8UNP@l11.aahpjyk.mongodb.net/test_1?retryWrites=true&w=majority
+JWT_SECRET_KEY = d4e54ab1258feb49da03765ca31e4398643e48705050f784e72f57fcc180625998a09bf0e4c15b1e5e5099903329d7d53c9175dbbe6744e46da23db995d7060b
+SALT_ROUNDS = 10
+PORT = 4000
