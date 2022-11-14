@@ -5,6 +5,7 @@ import CustomMain from "../CustomMain";
 import CustomFooter from "../CustomFooter";
 import CustomSideBar from "../CustomSideBar";
 
+// define css for all components
 function Layout() {
 	return (
 		<div className="navBar">

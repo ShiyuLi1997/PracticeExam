@@ -3,9 +3,10 @@ import React, { useEffect, useState, Dispatch, SetStateAction } from "react";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import axios from "axios";
+import "../../config/axiosInterceptors";
 // type
 import { axiosHomeGetResponseItem } from "../Home";
-import { HOME_ADD, HOME_UPDATE, HOME_DELETE } from "../../config/constant";
+import { HOME, HOME_UPDATE, HOME_DELETE } from "../../config/constant";
 
 import { axiosPutRow } from "../HomeAddItemForm";
 interface homeProductRowProps {
@@ -28,7 +29,7 @@ function HomeTableItem(props: homeProductRowProps) {
 	function handleDelete(e: React.SyntheticEvent, id: String) {
 		e.preventDefault();
 		axios
-			.delete(`${HOME_DELETE}/${id}`)
+			.delete(`${HOME + HOME_DELETE}/${id}`)
 			.then((res) => {
 				retreiveDataFromDatabase();
 			})
@@ -74,7 +75,7 @@ function HomeTableItem(props: homeProductRowProps) {
 			customerEmail: customerEmailChange,
 		};
 		axios
-			.put<axiosPutRow>(HOME_UPDATE, payload)
+			.put<axiosPutRow>(HOME + HOME_UPDATE, payload)
 			.then((res) => {
 				retreiveDataFromDatabase();
 			})

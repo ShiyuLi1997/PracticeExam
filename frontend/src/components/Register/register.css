@@ -12,3 +12,6 @@
 	width: 100px;
 	position: fixed 0px 0px;
 }
+.vh-100 {
+	overflow-y: hidden;
+}

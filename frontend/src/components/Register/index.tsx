@@ -50,185 +50,97 @@ function Register() {
 	}
 
 	return (
-		<>
-			{/* <Form className="registerForm" onSubmit={onSubmit}>
-				<h3> Register </h3>
-				
-				<Form.Group className="mb-3" controlId="formBasicEmail">
-					<Form.Label>Email address</Form.Label>
-					<Form.Control
-						type="email"
-						placeholder="Enter email"
-						onChange={(e) => {
-							setEmail(e.target.value);
-						}}
-					/>
-				</Form.Group>
-				<Form.Group className="mb-3" controlId="formBasicPassword">
-					<Form.Label>Password</Form.Label>
-					<Form.Control
-						type="password"
-						placeholder="Password"
-						onChange={(e) => {
-							setPswd(e.target.value);
-						}}
-					/>
-				</Form.Group>
-				<Form.Group className="mb-3" controlId="formBasicRePassword">
-					<Form.Label>Re-enter Password</Form.Label>
-					<Form.Control
-						type="password"
-						placeholder="Password"
-						onChange={(e) => {
-							setRePswd(e.target.value);
-						}}
-					/>
-				</Form.Group>
-				<Form.Group className="mb-3" controlId="formBasicName">
-					<Form.Label>Name</Form.Label>
-					<Form.Control
-						type="name"
-						placeholder="Name"
-						onChange={(e) => {
-							setName(e.target.value);
-						}}
-					/>
-				</Form.Group>
-				<Form.Group className="mb-3" controlId="formBasicAddress">
-					<Form.Label>Address</Form.Label>
-					<Form.Control
-						type="address"
-						placeholder="Address"
-						onChange={(e) => {
-							setAddress(e.target.value);
-						}}
-					/>
-				</Form.Group>
-				<Form.Group className="mb-3" controlId="formBasicPhone">
-					<Form.Label>Phone</Form.Label>
-					<Form.Control
-						type="phone"
-						placeholder="Phone"
-						onChange={(e) => {
-							setPhone(e.target.value);
-						}}
-					/>
-				</Form.Group>
-				<Form.Group className="mb-3" controlId="formBasicPicture">
-					<Form.Label>Profile Picture</Form.Label>
-					<Form.Control
-						type="file"
-						onChange={(e) => {
-							Array.prototype.forEach.call(
-								(e.target as HTMLInputElement).files,
-								function (file) {
-									setPicture(file);
-								}
-							);
-						}}
-					/>
-				</Form.Group>
-
-				<Button variant="primary" type="submit">
-					Submit
-				</Button>
-				<a href="/login"> Have an account? </a>
-			</Form> */}
-
-			<section className="vh-100">
-				<div className="container-fluid">
-					<div className="row">
-						<div className="col-sm-6 text-black">
-							<div className="px-5 ms-xl-4">
-								<i
-									className="fas fa-crow fa-2x me-3 pt-5 mt-xl-4"
-									style={{ color: "#709085" }}
-								></i>
-								{/* <img className="logoImg" src="national-logo.png" /> */}
-								{/* <span className="h1 fw-bold mb-0">Logo</span> */}
-							</div>
-
-							<div className="d-flex align-items-center h-custom-2 px-5 ms-xl-4 mt-5 pt-5 pt-xl-0 mt-xl-n5">
-								<form style={{ width: "23rem" }} onSubmit={onSubmit}>
-									<h3
-										className="fw-normal mb-3 pb-3"
-										style={{ letterSpacing: "1px" }}
-									>
-										Register
-									</h3>
-
-									<div className="form-outline mb-4">
-										<input
-											type="email"
-											id="form2Example18"
-											className="form-control form-control-lg"
-											onChange={(e) => {
-												setEmail(e.target.value);
-											}}
-										/>
-										<label className="form-label" htmlFor="form2Example18">
-											Email address
-										</label>
-									</div>
-
-									<div className="form-outline mb-4">
-										<input
-											type="password"
-											id="form2Example28"
-											className="form-control form-control-lg"
-											onChange={(e) => {
-												setPswd(e.target.value);
-											}}
-										/>
-										<label className="form-label" htmlFor="form2Example28">
-											Password
-										</label>
-									</div>
-
-									<div className="form-outline mb-4">
-										<input
-											type="password"
-											id="form2Example28"
-											className="form-control form-control-lg"
-											onChange={(e) => {
-												setRePswd(e.target.value);
-											}}
-										/>
-										<label className="form-label" htmlFor="form2Example28">
-											Re-enter Password
-										</label>
-									</div>
-
-									<div className="pt-1 mb-4">
-										<button
-											className="btn btn-info btn-lg btn-block"
-											type="submit"
-										>
-											Login
-										</button>
-									</div>
-
-									<p>
-										Already have an account?
-										<a href="/login" className="link-info">
-											Login here!
-										</a>
-									</p>
-								</form>
-							</div>
+		<section className="vh-100">
+			<div className="container-fluid">
+				<div className="row">
+					<div className="col-sm-6 text-black">
+						<div className="px-5 ms-xl-4">
+							<i
+								className="fas fa-crow fa-2x me-3 pt-5 mt-xl-4"
+								style={{ color: "#709085" }}
+							></i>
 						</div>
-						<div className="col-sm-6 px-0 d-none d-sm-block">
-							<img
-								src="https://g.foolcdn.com/image/?url=https%3A//g.foolcdn.com/editorial/images/443560/an-oil-pump-at-sunrise.jpg&w=2000&op=resize"
-								alt="Login image"
-								className="w-100 vh-100"
-								style={{ objectFit: "cover", objectPosition: "center" }}
-							/>
+
+						<div className="d-flex align-items-center h-custom-2 px-5 ms-xl-4 mt-5 pt-5 pt-xl-0 mt-xl-n5">
+							<form style={{ width: "23rem" }} onSubmit={onSubmit}>
+								<h3
+									className="fw-normal mb-3 pb-3"
+									style={{ letterSpacing: "1px" }}
+								>
+									Register
+								</h3>
+
+								<div className="form-outline mb-4">
+									<input
+										type="email"
+										id="form2Example18"
+										className="form-control form-control-lg"
+										onChange={(e) => {
+											setEmail(e.target.value);
+										}}
+									/>
+									<label className="form-label" htmlFor="form2Example18">
+										Email address
+									</label>
+								</div>
+
+								<div className="form-outline mb-4">
+									<input
+										type="password"
+										id="form2Example28"
+										className="form-control form-control-lg"
+										onChange={(e) => {
+											setPswd(e.target.value);
+										}}
+									/>
+									<label className="form-label" htmlFor="form2Example28">
+										Password
+									</label>
+								</div>
+
+								<div className="form-outline mb-4">
+									<input
+										type="password"
+										id="form2Example28"
+										className="form-control form-control-lg"
+										onChange={(e) => {
+											setRePswd(e.target.value);
+										}}
+									/>
+									<label className="form-label" htmlFor="form2Example28">
+										Re-enter Password
+									</label>
+								</div>
+
+								<div className="pt-1 mb-4">
+									<button
+										className="btn btn-info btn-lg btn-block"
+										type="submit"
+									>
+										Login
+									</button>
+								</div>
+
+								<p>
+									Already have an account?
+									<a href="/login" className="link-info">
+										Login here!
+									</a>
+								</p>
+							</form>
 						</div>
 					</div>
+					<div className="col-sm-6 px-0 d-none d-sm-block">
+						<img
+							src="https://g.foolcdn.com/image/?url=https%3A//g.foolcdn.com/editorial/images/443560/an-oil-pump-at-sunrise.jpg&w=2000&op=resize"
+							alt="Login image"
+							className="w-100 vh-100"
+							style={{ objectFit: "cover", objectPosition: "center" }}
+						/>
+					</div>
 				</div>
-			</section>
-		</>
+			</div>
+		</section>
 	);
 }
 

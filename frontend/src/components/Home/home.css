@@ -1,4 +1,9 @@
-.addItemInputControlGroup {
-	display: "flex";
-	background-color: red;
+.tableHeaderRow {
+	color: #fff;
+	background-color: #212529;
+	border-color: #32383e;
+	height: 40px;
+}
+.customerContent {
+	padding: 20px;
 }

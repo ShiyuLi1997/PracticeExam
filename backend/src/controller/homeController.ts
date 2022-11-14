@@ -1,67 +1,65 @@
 require("dotenv").config();
 import express, { Request, Response } from "express";
-import bcrypt from "bcryptjs";
-import jwt from "jsonwebtoken";
-import cookieParser from "cookie-parser";
 import { customerModel } from "../model/Customers";
 import jwtMiddleware from "../middleware/jwtMiddleware";
-
+import {
+	HOME_GET,
+	HOME_ADD,
+	HOME_UPDATE,
+	HOME_DELETE,
+} from "../utils/constant";
+import {
+	getAllCustomers,
+	saveNewCustomer,
+	updateOneWithId,
+	deleteOneWithId,
+} from "../model/Customers";
+import { DATA_RETREIVED, DATA_RETREIVED_FAILED } from "../utils/constant";
 var router = express.Router();
 
-// return products
+// return customer
 router.get(
-	"/home",
+	HOME_GET,
 	jwtMiddleware,
 	async function (req: Request, res: Response) {
-		try {
-			// get data from product collection in Mongodb
-			const allCustomers = await customerModel.find({});
-			res.send({ message: "success", data: allCustomers });
-		} catch (err) {
-			console.log(err);
-			res.send({ message: "failed" });
-		}
+		const allCustomers = await getAllCustomers();
+		res.status(200).json({ message: DATA_RETREIVED, data: allCustomers });
+		return;
 	}
 );
 
-// add one product
+// add one customer
 router.post(
-	"/home/add",
+	HOME_ADD,
 	jwtMiddleware,
 	async function (req: Request, res: Response) {
-		// create new record
-		let newCustomerRecord = new customerModel({
-			customerName: req.body.customerName,
-			customerAddress: req.body.customerAddress,
-			customerPhone: req.body.customerPhone,
-			customerEmail: req.body.customerEmail,
-		});
-		// save the new record to MongoDb
-		await newCustomerRecord.save();
-
-		res.send("ok");
+		await saveNewCustomer(
+			req.body.customerName,
+			req.body.customerAddress,
+			req.body.customerPhone,
+			req.body.customerEmail
+		);
+		res.status(200).json({ message: "successful" });
 	}
 );
 
-// add one product
+// update one customer
 router.put(
-	"/home/put",
+	HOME_UPDATE,
 	jwtMiddleware,
 	async function (req: Request, res: Response) {
-		const { _id: _id } = req.body;
-		await customerModel.findOneAndUpdate({ _id: _id }, req.body);
-		res.send("ok");
+		await updateOneWithId(req.body._id, req.body);
+		res.status(200).json({ message: "successful" });
 	}
 );
 
-// delete one product
+// delete one customer
 router.delete(
-	"/home/delete/:id",
+	HOME_DELETE + "/:id",
 	jwtMiddleware,
 	async function (req: Request, res: Response) {
-		const id = req.params.id;
-		await customerModel.deleteOne({ _id: id });
-		res.send("ok");
+		await deleteOneWithId(req.params.id);
+		res.status(200).json({ message: "successful" });
 	}
 );
 

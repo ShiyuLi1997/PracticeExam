@@ -28,3 +28,7 @@
 		height: 100%;
 	}
 }
+
+.vh-100 {
+	overflow-y: hidden;
+}

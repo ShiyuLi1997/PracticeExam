@@ -8,26 +8,24 @@ import React from "react";
 function CustomHeader() {
 	const navigate = useNavigate();
 	return (
-		<Navbar bg="light" expand="lg">
+		<Navbar bg="light" expand="sm">
 			<Container>
 				<Navbar.Toggle aria-controls="basic-navbar-nav" />
 				<Navbar.Collapse id="basic-navbar-nav">
-					<Nav className="me-auto">
-						{/* <Nav.Link href="home">Home</Nav.Link> */}
+					<Nav className="me-auto justify-content-end">
 						<Nav.Link
-							// href=""
 							className="logout-btn"
 							onClick={() => {
-								console.log("logout click: ");
-								console.log(
-									"logout click: before remove jwt",
-									cookies.get("jwt")
-								);
-								cookies.remove("jwt");
-								console.log(
-									"logout click: after remove jwt",
-									cookies.get("jwt")
-								);
+								// console.log("logout click: ");
+								// console.log(
+								// 	"logout click: before remove token",
+								// 	cookies.get("token")
+								// );
+								cookies.remove("token");
+								// console.log(
+								// 	"logout click: after remove token",
+								// 	cookies.get("token")
+								// );
 								navigate("/login");
 							}}
 						>

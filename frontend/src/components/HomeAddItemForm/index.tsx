@@ -2,16 +2,16 @@ import React, { useState } from "react";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import axios from "axios";
-import Cookies from "universal-cookie";
 import {
+	HOME,
 	HOME_GET,
 	HOME_ADD,
 	HOME_UPDATE,
 	HOME_DELETE,
 } from "../../config/constant";
 import { axiosHomeGetResponseItem } from "../Home";
-
-const cookies = new Cookies();
+import "./HomeAddItemForm.css";
+import "../../config/axiosInterceptors";
 
 interface axiosHomePayload {
 	customerName: String;
@@ -39,16 +39,12 @@ function HomeAddItemForm(props: HomeAddItemFormProps) {
 	function handleSubmit(e: React.SyntheticEvent) {
 		e.preventDefault();
 		axios
-			.post<axiosHomePayload>(
-				HOME_ADD,
-				{
-					customerName: customerName,
-					customerAddress: customerAddress,
-					customerPhone: customerPhone,
-					customerEmail: customerEmail,
-				},
-				{ headers: { Authorization: cookies.get("jwt") } }
-			)
+			.post<axiosHomePayload>(HOME + HOME_ADD, {
+				customerName: customerName,
+				customerAddress: customerAddress,
+				customerPhone: customerPhone,
+				customerEmail: customerEmail,
+			})
 			.then((res) => {
 				retreiveDataFromDatabase();
 			})
@@ -94,6 +90,7 @@ function HomeAddItemForm(props: HomeAddItemFormProps) {
 				<Button
 					variant="primary"
 					type="button"
+					className="addItemBtn"
 					onClick={(e: React.SyntheticEvent) => {
 						handleSubmit(e);
 					}}

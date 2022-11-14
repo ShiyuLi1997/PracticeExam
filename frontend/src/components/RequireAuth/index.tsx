@@ -1,20 +1,17 @@
-import React from "react";
-import { useNavigate } from "react-router-dom";
-import Cookies from "universal-cookie";
-import Layout from "../Layout";
+import React, { ReactElement } from "react";
+import { Navigate } from "react-router-dom";
 import { cookies } from "../../config/cookies";
 
-function RequireAuth() {
-	const navigate = useNavigate();
-	// get token in cookie
-	const token = cookies.get("jwt");
-	console.log("RequireAuth: ", token);
-	// if token NOT exist navigate to login page
+interface Props {
+	children: ReactElement;
+}
+
+function RequireAuth({ children }: Props) {
+	const token = cookies.get("token");
 	if (!token) {
-		navigate("/login");
+		return <Navigate to="/login" />;
 	}
-	// else return Layout
-	return <Layout />;
+	return children;
 }
 
 export default RequireAuth;

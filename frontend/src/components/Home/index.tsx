@@ -7,9 +7,10 @@ import HomeAddItemForm from "../HomeAddItemForm";
 
 import Table from "react-bootstrap/Table";
 // cookie
-import { HOME_GET } from "../../config/constant";
+import { HOME } from "../../config/constant";
 import { cookies } from "../../config/cookies";
-
+import "../../config/axiosInterceptors";
+import "./Home.css";
 // types ts
 export type axiosHomeGetResponseItem = {
 	_id: String;
@@ -25,16 +26,14 @@ function Home() {
 
 	const retreiveDataFromDatabase = () => {
 		axios
-			.get(HOME_GET, { headers: { Authorization: cookies.get("jwt") } })
+			.get(HOME)
 			.then((res) => {
-				// console.log("res.data.data: ", res.data.data);
 				const formattedData = res.data.data.map(
 					(e: axiosHomeGetResponseItem) => {
 						e.edit = false;
 						return e;
 					}
 				);
-				// console.log(formattedData);
 				setData(formattedData);
 			})
 			.catch((e) => {
@@ -47,18 +46,16 @@ function Home() {
 	}, []);
 
 	return (
-		<>
-			{/* add one item */}
+		<div className="customerContent">
 			<HomeAddItemForm
 				data={data}
 				setData={setData}
 				retreiveDataFromDatabase={retreiveDataFromDatabase}
 			/>
 
-			{/* display all items */}
-			<Table>
-				<thead>
-					<tr>
+			<Table className="table table-striped">
+				<thead className="thead-dark">
+					<tr className="tableHeaderRow">
 						<th>#</th>
 						<th> Name </th>
 						<th> Address </th>
@@ -69,11 +66,11 @@ function Home() {
 					</tr>
 				</thead>
 				<tbody>
-					{data.map((e: axiosHomeGetResponseItem, index) => {
+					{data.map((ele: axiosHomeGetResponseItem, index) => {
 						return (
 							<HomeTableItem
-								key={e._id as React.Key}
-								e={e}
+								key={ele._id as React.Key}
+								e={ele}
 								index={index}
 								data={data}
 								setData={setData}
@@ -83,7 +80,7 @@ function Home() {
 					})}
 				</tbody>
 			</Table>
-		</>
+		</div>
 	);
 }
 
