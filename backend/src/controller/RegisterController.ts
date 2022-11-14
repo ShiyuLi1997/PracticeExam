@@ -6,12 +6,12 @@ var router = express.Router();
 
 router.post("/", async function (req: Request, res: Response) {
 	let { email, pswd, name, address, phone, picture } = req.body;
-	const findRes = findCredentialsWithEmail(email);
+	const findRes = await findCredentialsWithEmail(email);
 	if (!findRes) {
 		// save new document
 		const hashed = await hashPassword(pswd);
 		saveNewDocument(email, hashed, name, address, phone);
-		console.log("register successful");
+		console.log("register successful: ", email);
 		res.status(200).json({ message: REGISTER_SUCCESSFUL });
 		return;
 	} else {

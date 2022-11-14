@@ -1,16 +1,15 @@
 import React from "react";
-// router dom
 import CustomHeader from "../CustomHeader";
 import CustomMain from "../CustomMain";
 import CustomFooter from "../CustomFooter";
 import CustomSideBar from "../CustomSideBar";
 
-// define css for all components
+// layout for the page
 function Layout() {
 	return (
-		<div className="navBar">
-			<CustomHeader />
+		<div>
 			<CustomSideBar />
+			<CustomHeader />
 			<CustomMain />
 			<CustomFooter />
 		</div>

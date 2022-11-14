@@ -1,17 +1,12 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
-import { redirect, useNavigate } from "react-router-dom";
-// components
 import HomeTableItem from "../HomeTableItem";
 import HomeAddItemForm from "../HomeAddItemForm";
-
 import Table from "react-bootstrap/Table";
-// cookie
 import { HOME } from "../../config/constant";
-import { cookies } from "../../config/cookies";
 import "../../config/axiosInterceptors";
 import "./Home.css";
-// types ts
+
 export type axiosHomeGetResponseItem = {
 	_id: String;
 	customerName: String;
@@ -53,7 +48,7 @@ function Home() {
 				retreiveDataFromDatabase={retreiveDataFromDatabase}
 			/>
 
-			<Table className="table table-striped">
+			<Table className="table table-striped table-borderless">
 				<thead className="thead-dark">
 					<tr className="tableHeaderRow">
 						<th>#</th>

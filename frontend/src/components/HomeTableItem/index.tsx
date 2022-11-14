@@ -1,14 +1,12 @@
 import React, { useEffect, useState, Dispatch, SetStateAction } from "react";
-// bootstrap
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import axios from "axios";
 import "../../config/axiosInterceptors";
-// type
 import { axiosHomeGetResponseItem } from "../Home";
 import { HOME, HOME_UPDATE, HOME_DELETE } from "../../config/constant";
-
 import { axiosPutRow } from "../HomeAddItemForm";
+import "./HomeTableItem.css";
 interface homeProductRowProps {
 	e: axiosHomeGetResponseItem;
 	index: number;
@@ -161,7 +159,7 @@ function HomeTableItem(props: homeProductRowProps) {
 					</td>
 					<td>
 						<Button
-							// style={{}}
+							variant="danger"
 							onClick={(event: React.SyntheticEvent) => {
 								handleDelete(event, e._id);
 							}}

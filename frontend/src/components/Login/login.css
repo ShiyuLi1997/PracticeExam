@@ -1,8 +1,3 @@
-.loginForm {
-	width: "600px";
-	display: "flex";
-	flex-direction: "column";
-}
 .errorMessage {
 	color: red;
 }
@@ -31,4 +26,11 @@
 
 .vh-100 {
 	overflow-y: hidden;
+}
+
+.logo {
+	position: fixed;
+	top: 20px;
+	left: 20px;
+	width: 300px;
 }

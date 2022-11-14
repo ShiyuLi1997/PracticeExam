@@ -63,7 +63,15 @@ function Login() {
 			<div className="container-fluid">
 				<div className="row">
 					<div className="col-sm-6 text-black">
-						<div className="d-flex align-items-center h-custom-2 px-5 ms-xl-4 mt-5 pt-5 pt-xl-0 mt-xl-n5">
+						<div className="px-5 ms-xl-4">
+							<img
+								className="logo"
+								src="https://png.pngtree.com/png-vector/20210129/ourlarge/pngtree-factory-building-oil-refining-png-image_2849770.jpg"
+								alt=""
+								style={{ width: "50px", height: "auto" }}
+							/>
+						</div>
+						<div className="d-flex align-items-center justify-content-center h-custom-2 px-5 ms-xl-4 mt-5 pt-5 pt-xl-0 mt-xl-n5">
 							<form style={{ width: "23rem" }} onSubmit={onSubmit}>
 								<h3
 									className="fw-normal mb-3 pb-3"

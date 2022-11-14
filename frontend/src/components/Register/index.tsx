@@ -30,23 +30,24 @@ function Register() {
 
 	function onSubmit(e: React.SyntheticEvent) {
 		e.preventDefault();
+		if (pswd !== rePswd) {
+			setErrorMessage("Passwords entered not match");
+		} else {
+			const payload = {
+				email,
+				pswd,
+			};
 
-		const payload = {
-			email,
-			pswd,
-			name,
-			address,
-			phone,
-		};
-
-		axios
-			.post<AxiosRegisterPayload>(REGISTER_URL, payload)
-			.then((res) => {
-				navigate("/login");
-			})
-			.catch((err) => alert(err));
-
-		// setErrorMessage("Account already exist");
+			axios
+				.post<AxiosRegisterPayload>(REGISTER_URL, payload)
+				.then((res) => {
+					navigate("/login");
+				})
+				.catch((err) => {
+					console.log(err);
+					setErrorMessage("Account already exist");
+				});
+		}
 	}
 
 	return (
@@ -55,13 +56,15 @@ function Register() {
 				<div className="row">
 					<div className="col-sm-6 text-black">
 						<div className="px-5 ms-xl-4">
-							<i
-								className="fas fa-crow fa-2x me-3 pt-5 mt-xl-4"
-								style={{ color: "#709085" }}
-							></i>
+							<img
+								className="logo"
+								src="https://png.pngtree.com/png-vector/20210129/ourlarge/pngtree-factory-building-oil-refining-png-image_2849770.jpg"
+								alt=""
+								style={{ width: "50px", height: "auto" }}
+							/>
 						</div>
 
-						<div className="d-flex align-items-center h-custom-2 px-5 ms-xl-4 mt-5 pt-5 pt-xl-0 mt-xl-n5">
+						<div className="d-flex align-items-center justify-content-center h-custom-2 px-5 ms-xl-4 mt-5 pt-5 pt-xl-0 mt-xl-n5">
 							<form style={{ width: "23rem" }} onSubmit={onSubmit}>
 								<h3
 									className="fw-normal mb-3 pb-3"
@@ -117,10 +120,10 @@ function Register() {
 										className="btn btn-info btn-lg btn-block"
 										type="submit"
 									>
-										Login
+										Register
 									</button>
 								</div>
-
+								<p style={{ color: "red" }}>{errorMessage}</p>
 								<p>
 									Already have an account?
 									<a href="/login" className="link-info">

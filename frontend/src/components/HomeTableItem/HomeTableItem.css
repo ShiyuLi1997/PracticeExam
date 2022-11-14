@@ -1,0 +1,6 @@
+@media screen and (max-width: 930px) {
+	tr {
+		display: flex;
+		flex-direction: column;
+	}
+}

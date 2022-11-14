@@ -54,51 +54,75 @@ function HomeAddItemForm(props: HomeAddItemFormProps) {
 	}
 
 	return (
-		<Form>
-			<Form.Group
-				className="addItemInputControlGroup"
-				controlId="formBasicEmail"
-			>
-				<Form.Control
-					type="text"
-					placeholder="Name"
-					onChange={(e) => {
-						setCustomerName(e.target.value);
-					}}
-				/>
-				<Form.Control
-					type="text"
-					placeholder="Address"
-					onChange={(e) => {
-						setCustomerAddress(e.target.value);
-					}}
-				/>
-				<Form.Control
-					type="text"
-					placeholder="Phone"
-					onChange={(e) => {
-						setCustomerPhone(e.target.value);
-					}}
-				/>
-				<Form.Control
-					type="text"
-					placeholder="Email"
-					onChange={(e) => {
-						setCustomerEmail(e.target.value);
-					}}
-				/>
-				<Button
-					variant="primary"
-					type="button"
-					className="addItemBtn"
-					onClick={(e: React.SyntheticEvent) => {
-						handleSubmit(e);
-					}}
-				>
-					Submit
-				</Button>
-			</Form.Group>
-		</Form>
+		<div className="addItemFormContainer">
+			<div className="row g-3 align-items-center justify-content-center">
+				<h3> Add Customer Info</h3>
+				<div className="col-auto">
+					<label className="col-form-label">Name</label>
+					<input
+						type="text"
+						className="form-control"
+						aria-describedby="passwordHelpInline"
+						placeholder="Name"
+						onChange={(e) => {
+							setCustomerName(e.target.value);
+						}}
+					/>
+				</div>
+
+				<div className="col-auto">
+					<label className="col-form-label">Phone</label>
+					<input
+						type="text"
+						className="form-control"
+						aria-describedby="passwordHelpInline"
+						placeholder="Phone"
+						onChange={(e) => {
+							setCustomerPhone(e.target.value);
+						}}
+					/>
+				</div>
+
+				<div className="col-auto">
+					<label className="col-form-label">Email</label>
+					<input
+						type="text"
+						className="form-control"
+						aria-describedby="passwordHelpInline"
+						placeholder="Email"
+						onChange={(e) => {
+							setCustomerEmail(e.target.value);
+						}}
+					/>
+				</div>
+
+				<div className="col-auto">
+					<label className="col-form-label">Address</label>
+					<input
+						type="text"
+						className="form-control"
+						aria-describedby="passwordHelpInline"
+						placeholder="Address"
+						onChange={(e) => {
+							setCustomerAddress(e.target.value);
+						}}
+						style={{ width: "35em" }}
+					/>
+				</div>
+
+				<div className="col-auto" style={{ alignSelf: "end" }}>
+					<button
+						type="submit"
+						className="btn btn-primary"
+						onClick={(e: React.SyntheticEvent) => {
+							handleSubmit(e);
+						}}
+					>
+						Add
+					</button>
+				</div>
+			</div>
+		</div>
 	);
 }
 
